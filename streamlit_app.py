@@ -31,7 +31,7 @@ def load_data():
 
     # Fallback sample data (only shown if CSVs are missing)
     boats = pd.DataFrame({
-        "sail_number": ["934","981","1048","986","1081","1120"],
+        "sail_number": ["934hc","981hc","1048hc","986hc","1081hc","1120hc"],
         "boat_name": ["Assomast","AFP Biocombustibles","DMG MORI 2","ASCODAL","XUCLA","Future Vector"],
         "public_typing": ["Foiling Scow","Maxi","Foiling Scow","Maxi","Vector","Vector"],
         "foiling": [True,True,True,True,True,True],
