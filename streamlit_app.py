@@ -56,14 +56,14 @@ with tab1:
 with tab2:
     st.subheader("2025 Race Results")
     if not results.empty:
-        st.dataframe(results, use_container_width=True)
+        st.dataframe(results, width="stretch")
     else:
         st.info("Full results loading soon!")
 
 with tab3:
     st.subheader("Skipper Profiles")
     if not skippers.empty:
-        st.dataframe(skippers, use_container_width=True)
+        st.dataframe(skippers, width="stretch")
     else:
         st.info("Profiles loading soon!")
 
