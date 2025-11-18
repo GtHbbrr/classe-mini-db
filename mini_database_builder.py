@@ -110,7 +110,7 @@ for race in RACES:
         res['race'] = race['name']
         res['category'] = race['category']
     all_results.extend(results)
-    time.sleep(100)  # Rate limit
+    time.sleep(1)  # Rate limit
 
 # Also scrape overall standings
 print("Scraping overall standings...")
