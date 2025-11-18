@@ -1,6 +1,10 @@
 import streamlit as st
 import pandas as pd
 import os
+import subprocess
+import sys
+
+subprocess.run([f"{sys.executable}", "mini_database_builder.py"])
 
 # ------------------------------------------------------------------
 # Page config & header
