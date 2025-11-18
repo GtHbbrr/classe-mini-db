@@ -6,15 +6,16 @@ from typing import List, Dict
 
 # List of 2025 races with details (name, URL ID, category notes). Expand as needed from https://www.classemini.com/?mode=courses
 RACES = [
-    {"name": "La Pornichet Select 2025", "id": 517, "category": "Solo", "url": "https://www.classemini.com/course-fr-517.html"},
-    {"name": "Mini en Mai 2025", "id": 518, "category": "Solo", "url": "https://www.classemini.com/course-fr-518.html"},
-    {"name": "Mini Fastnet 2025", "id": 520, "category": "Double", "url": "https://www.classemini.com/course-fr-520.html"},
-    {"name": "Calvados Cup Course 2 2025", "id": 522, "category": "Solo", "url": "https://www.classemini.com/course-fr-522.html"},
-    {"name": "La Boulangère Mini Transat 2025", "id": 524, "category": "Solo (Proto/Serie)", "url": "https://www.classemini.com/course-fr-524.html"},
-    {"name": "Solo Med 2025", "id": 529, "category": "Solo", "url": "https://www.classemini.com/course-fr-529.html"},
-    {"name": "Imperia Mini Solo 2025", "id": 531, "category": "Solo", "url": "https://www.classemini.com/course-fr-531.html"},
-    {"name": "Mare Nostrum 2025", "id": 532, "category": "Double", "url": "https://www.classemini.com/course-fr-532.html"},
-    {"name": "Puru Transgasconne 2025", "id": 536, "category": "Double", "url": "https://www.classemini.com/course-fr-536.html"},
+    #{"name": "La Pornichet Select 2025", "id": 517, "category": "Solo", "url": "https://www.classemini.com/course-fr-517.html"},
+    #{"name": "Mini en Mai 2025", "id": 518, "category": "Solo", "url": "https://www.classemini.com/course-fr-518.html"},
+    #{"name": "Mini Fastnet 2025", "id": 520, "category": "Double", "url": "https://www.classemini.com/course-fr-520.html"},
+    #{"name": "Calvados Cup Course 2 2025", "id": 522, "category": "Solo", "url": "https://www.classemini.com/course-fr-522.html"},
+    #{"name": "La Boulangère Mini Transat 2025", "id": 524, "category": "Solo (Proto/Serie)", "url": "https://www.classemini.com/course-fr-524.html"},
+    {"name": "Mini Petrolera 2025", "id": 525, "category": "Solo", "url": "https://www.classemini.com/course-fr-525.html"},
+    #{"name": "Solo Med 2025", "id": 529, "category": "Solo", "url": "https://www.classemini.com/course-fr-529.html"},
+    #{"name": "Imperia Mini Solo 2025", "id": 531, "category": "Solo", "url": "https://www.classemini.com/course-fr-531.html"},
+    #{"name": "Mare Nostrum 2025", "id": 532, "category": "Double", "url": "https://www.classemini.com/course-fr-532.html"},
+    #{"name": "Puru Transgasconne 2025", "id": 536, "category": "Double", "url": "https://www.classemini.com/course-fr-536.html"},
     # Add more, e.g., {"name": "Trophée Marie Agnès Péron 2025", "id": 519, "category": "Solo", "url": "..."}  # Find ID via site
 ]
 
