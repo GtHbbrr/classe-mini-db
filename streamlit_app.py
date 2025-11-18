@@ -1,35 +1,31 @@
 import streamlit as st
 import pandas as pd
-import sqlite3
 import os
 
 st.set_page_config(page_title="Classe Mini 6.50 DB", layout="wide")
-st.title("Classe Mini 6.50 – Complete History 1977-2025")
+st.title("🛥️ Classe Mini 6.50 – Complete History 1977-2025")
 
 st.markdown("""
 **The most complete open database of the Classe Mini 6.50 — free forever**  
 1,400+ boats • 15,000+ results • 800+ skippers • 1977–2025 • weekly auto-updates
 """)
 
-# Load real data (I'll give you the file in step 2)
+# Load real data from CSVs (no openpyxl needed)
 @st.cache_data
 def load_data():
-    if os.path.exists("data/exports/classe_mini_2025_full.xlsx"):
-        boats = pd.read_excel("data/exports/classe_mini_2025_full.xlsx", sheet_name="Boats")
-        results = pd.read_excel("data/exports/classe_mini_2025_full.xlsx", sheet_name="Results")
-        skippers = pd.read_excel("data/exports/classe_mini_2025_full.xlsx", sheet_name="Skippers")
+    if os.path.exists("data/exports/Boats.csv"):
+        boats = pd.read_csv("data/exports/Boats.csv")
+        results = pd.read_csv("data/exports/Results.csv")
+        skippers = pd.read_csv("data/exports/Skippers.csv")
         return boats, results, skippers
     else:
-        # Fallback sample if file missing
+        # Fallback sample
         boats = pd.DataFrame({
             "sail_number": ["934","981","1048","986","1081"],
             "boat_name": ["Assomast","AFP Biocombustibles","DMG MORI 2","ASCODAL","XUCLA"],
             "public_typing": ["Foiling Scow","Maxi","Foiling Scow","Maxi","Vector"],
             "foiling": [True,True,True,True,True],
-            "launch_year": [2023,2022,2022,2021,2024],
-            "skipper": ["Mathis Bourgnon","Paul Cousin","Alexandre Demange","Margaux Chanceaulme","Carlos Manera"],
-            "nationality": ["FR","FR","FR","FR","ES"],
-            "training_base": ["Les Sables","Lorient","Lorient","Lorient","Spain"]
+            "launch_year": [2023,2022,2022,2021,2024]
         })
         results = pd.DataFrame()
         skippers = pd.DataFrame()
@@ -37,7 +33,7 @@ def load_data():
 
 boats, results, skippers = load_data()
 
-tab1, tab2, tab3 = st.tabs(["Boats","2025 Transat Results","Skippers"])
+tab1, tab2, tab3 = st.tabs(["Boats","2025 Results","Skippers"])
 
 with tab1:
     st.subheader("Boat Explorer")
@@ -58,19 +54,18 @@ with tab1:
     st.download_button("Download boats CSV", df.to_csv(index=False), "mini_boats.csv")
 
 with tab2:
-    st.subheader("Mini Transat 2025 – Provisional Top 30")
-    # Real results will appear automatically when you add the Excel
+    st.subheader("2025 Race Results")
     if not results.empty:
-        st.dataframe(results.head(30), use_container_width=True)
+        st.dataframe(results, use_container_width=True)
     else:
-        st.info("Full 2025 Transat + Fastnet results coming in the next commit (today!)")
+        st.info("Full results loading soon!")
 
 with tab3:
     st.subheader("Skipper Profiles")
     if not skippers.empty:
         st.dataframe(skippers, use_container_width=True)
     else:
-        st.dataframe(boats[["skipper","nationality","training_base"]].drop_duplicates())
+        st.info("Profiles loading soon!")
 
 st.markdown("---")
 st.markdown("Made with love for the Mini fleet • [GitHub](https://github.com/GtHbbrr/classe-mini-db) • Live since Nov 2025")
