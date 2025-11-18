@@ -8,7 +8,7 @@ The most complete, structured and up-to-date historical database of the Classe M
 - Ownership & sales history (with "disponible" pitches)  
 - Weekly automatic updates  
 
-Live dashboard → https://mini.db.fyi (coming soon)  
+Live dashboard → https://classe-mini-db-jmj2thshqjecc9xzrqga3g.streamlit.app   (https://mini.db.fyi coming soon)  
 Download full SQLite → /data/exports/classe_mini_historical.db  
 
 Made with love for the craziest 6.50 sailors on the planet.
