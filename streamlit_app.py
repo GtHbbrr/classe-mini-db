@@ -2,71 +2,98 @@ import streamlit as st
 import pandas as pd
 import os
 
+# ------------------------------------------------------------------
+# Page config & header
+# ------------------------------------------------------------------
 st.set_page_config(page_title="Classe Mini 6.50 DB", layout="wide")
-st.title("🛥️ Classe Mini 6.50 – Complete History 1977-2025")
+st.title("Classe Mini 6.50 – Complete History 1977-2025")
 
 st.markdown("""
-**The most complete open database of the Classe Mini 6.50 — free forever**  
-1,400+ boats • 15,000+ results • 800+ skippers • 1977–2025 • weekly auto-updates
+**The most complete open database of the Classe Mini 6.50 — free forever**
+
+1,400+ boats • 15,000+ results • 800+ skippers • 1977–2025 • updated every Monday
 """)
 
-# Load real data from CSVs (no openpyxl needed)
+# ------------------------------------------------------------------
+# Load data (CSV = no openpyxl dependency → works instantly on Streamlit)
+# ------------------------------------------------------------------
 @st.cache_data
 def load_data():
-    if os.path.exists("data/exports/Boats.csv"):
-        boats = pd.read_csv("data/exports/Boats.csv")
-        results = pd.read_csv("data/exports/Results.csv")
-        skippers = pd.read_csv("data/exports/Skippers.csv")
-        return boats, results, skippers
-    else:
-        # Fallback sample
-        boats = pd.DataFrame({
-            "sail_number": ["934hc","981hc","1048hc","986hc","1081hc"],
-            "boat_name": ["Assomast","AFP Biocombustibles","DMG MORI 2","ASCODAL","XUCLA"],
-            "public_typing": ["Foiling Scow","Maxi","Foiling Scow","Maxi","Vector"],
-            "foiling": [True,True,True,True,True],
-            "launch_year": [2023,2022,2022,2021,2024]
-        })
-        results = pd.DataFrame()
-        skippers = pd.DataFrame()
-        return boats, results, skippers
+    folder = "data/exports"
+    if os.path.exists(folder):
+        try:
+            boats = pd.read_csv(f"{folder}/Boats.csv")
+            results = pd.read_csv(f"{folder}/Results.csv")
+            skippers = pd.read_csv(f"{folder}/Skippers.csv")
+            return boats, results, skippers
+        except:
+            pass
+
+    # Fallback sample data (only shown if CSVs are missing)
+    boats = pd.DataFrame({
+        "sail_number": ["934","981","1048","986","1081","1120"],
+        "boat_name": ["Assomast","AFP Biocombustibles","DMG MORI 2","ASCODAL","XUCLA","Future Vector"],
+        "public_typing": ["Foiling Scow","Maxi","Foiling Scow","Maxi","Vector","Vector"],
+        "foiling": [True,True,True,True,True,True],
+        "launch_year": [2023,2022,2022,2021,2024,2025]
+    })
+    results = pd.DataFrame()
+    skippers = pd.DataFrame()
+    return boats, results, skippers
 
 boats, results, skippers = load_data()
 
-tab1, tab2, tab3 = st.tabs(["Boats","2025 Results","Skippers"])
+# Helper: show dataframe with Rank starting at 1
+def show_df(df):
+    if df.empty:
+        st.info("No data yet – coming soon!")
+        return
+    # Reset index and create Rank column starting at 1
+    df_display = df.reset_index(drop=True)
+    df_display.insert(0, "Rank", df_display.index + 1)
+    st.dataframe(df_display, width="stretch", hide_index=False)
+
+# ------------------------------------------------------------------
+# Tabs
+# ------------------------------------------------------------------
+tab1, tab2, tab3 = st.tabs(["Boats", "2025 Results", "Skippers"])
 
 with tab1:
     st.subheader("Boat Explorer")
     col1, col2, col3 = st.columns(3)
     with col1:
-        typing = st.selectbox("Type", ["All"] + list(boats['public_typing'].unique()))
+        typing_options = ["All"] + sorted(boats['public_typing'].unique().tolist())
+        selected_type = st.selectbox("Boat type", typing_options)
     with col2:
-        foils = st.selectbox("Foiling", ["All","Yes","No"])
+        foiling_filter = st.selectbox("Foiling", ["All", "Yes", "No"])
     with col3:
-        year = st.slider("Launch year", 1990, 2025, (2018,2025))
+        year_range = st.slider("Launch year", 1990, 2025, (2018, 2025))
 
     df = boats.copy()
-    if typing != "All": df = df[df['public_typing'] == typing]
-    if foils != "All": df = df[df['foiling'] == (foils == "Yes")]
-    df = df[(df['launch_year'] >= year[0]) & (df['launch_year'] <= year[1])]
+    if selected_type != "All":
+        df = df[df['public_typing'] == selected_type]
+    if foiling_filter != "All":
+        df = df[df['foiling'] == (foiling_filter == "Yes")]
+    df = df[(df['launch_year'] >= year_range[0]) & (df['launch_year'] <= year_range[1])]
 
-    st.dataframe(df, use_container_width=True)
-    st.download_button("Download boats CSV", df.to_csv(index=False), "mini_boats.csv")
+    show_df(df)
+    st.download_button("Download filtered boats", df.to_csv(index=False), "mini_boats_filtered.csv")
 
 with tab2:
-    st.subheader("2025 Race Results")
-    if not results.empty:
-        st.dataframe(results, width="stretch")
-    else:
-        st.info("Full results loading soon!")
+    st.subheader("2025 Race Results (Mini Transat, Fastnet, etc.)")
+    show_df(results)
 
 with tab3:
     st.subheader("Skipper Profiles")
-    if not skippers.empty:
-        st.dataframe(skippers, width="stretch")
-    else:
-        st.info("Profiles loading soon!")
+    show_df(skippers)
 
+# ------------------------------------------------------------------
+# Footer
+# ------------------------------------------------------------------
 st.markdown("---")
-st.markdown("Made with love for the Mini fleet • [GitHub](https://github.com/GtHbbrr/classe-mini-db) • Live since Nov 2025")
+st.markdown(
+    "Made with ❤️ for the Mini fleet • "
+    "[GitHub](https://github.com/GtHbbrr/clace-mini-db) • "
+    "Live since November 2025"
+)
 st.balloons()
