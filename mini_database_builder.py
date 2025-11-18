@@ -134,15 +134,5 @@ for line in lines:
 df_results = pd.DataFrame(all_results)
 df_overall = pd.DataFrame(overall_results)
 
-# Export to Excel with multiple sheets
-with pd.ExcelWriter('mini_2025_results.xlsx', engine='openpyxl') as writer:
-    df_results.to_excel(writer, sheet_name='All Races', index=False)
-    df_overall.to_excel(writer, sheet_name='Overall Standings', index=False)
-    # Per-race sheets
-    for race in RACES:
-        race_df = df_results[df_results['race'] == race['name']]
-        if not race_df.empty:
-            race_df.to_excel(writer, sheet_name=race['name'][:31], index=False)  # Sheet name limit
-
-print(f"Database built! Check 'mini_2025_results.xlsx' for {len(df_results)} entries across races + overall.")
+print(f"Dataframes built! {len(df_results)} entries across races + overall.")
 print("Sample data:\n", df_results.head())
