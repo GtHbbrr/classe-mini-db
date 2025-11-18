@@ -32,7 +32,7 @@ def scrape_race_results(url: str) -> List[Dict]:
         return []
     
     soup = BeautifulSoup(response.content, 'lxml')
-    print(f"--- DEBUG {url} ---"}
+    print(f"--- DEBUG {url} ---")
     print(soup.find('body').get_text()[:2000])   # First 2000 chars of body for inspection          
     results = []
     
