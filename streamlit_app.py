@@ -51,7 +51,12 @@ def show_df(df):
     # Reset index and create Rank column starting at 1
     df_display = df.reset_index(drop=True)
     df_display.insert(0, "Rank", df_display.index + 1)
-    st.dataframe(df_display, width="stretch", hide_index=True)
+    st.dataframe(df_display, width="stretch", hide_index=True, column_config={
+        "rank": st.column_config.Column(
+            "Rank", # Optional: Change the display label
+            width="small" # Options: "small" (75px), "medium" (200px), "large" (400px) or an integer in pixels (e.g., 50)
+        )
+    })
 
 # ------------------------------------------------------------------
 # Tabs
