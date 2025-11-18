@@ -21,7 +21,7 @@ def load_data():
     else:
         # Fallback sample
         boats = pd.DataFrame({
-            "sail_number": ["934","981","1048","986","1081"],
+            "sail_number": ["934hc","981hc","1048hc","986hc","1081hc"],
             "boat_name": ["Assomast","AFP Biocombustibles","DMG MORI 2","ASCODAL","XUCLA"],
             "public_typing": ["Foiling Scow","Maxi","Foiling Scow","Maxi","Vector"],
             "foiling": [True,True,True,True,True],
